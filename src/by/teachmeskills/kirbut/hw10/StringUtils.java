@@ -77,7 +77,7 @@ public class StringUtils {
     /*
     * numberOfPassport - user data of passport
     */
-    public static boolean checkNumberOfPassport(String numberOfPassport) {
+    public static boolean isNumberOfPassportCorrect(String numberOfPassport) {
         numberOfPassport = numberOfPassport.trim();
         char[] charNumber = numberOfPassport.toCharArray();
 
@@ -90,4 +90,33 @@ public class StringUtils {
 
         return true;
     }
+
+    /*
+    * password - user password whose passed as parameter
+    */
+    public static boolean isPasswordReliable(String password) {
+        if (password.isBlank())
+            throw new IllegalArgumentException("You didn't enter a password.");
+
+        char[] passwordArray = password.toCharArray();
+
+        if (passwordArray.length < 8)
+            return false;
+
+        int countOfUppercaseLetter = 0;
+        int countOfLowerCaseLetter = 0;
+        int countOfNumbers = 0;
+
+        for (char c : passwordArray) {
+            if ((c >= 'A' && c <= 'Z') || (c >= 'À' && c <= 'ß') || c == '¨')
+                countOfUppercaseLetter++;
+            else if ((c >= 'a' && c <= 'z') || (c >= 'à' && c <= 'ÿ') || c == '¸')
+                countOfLowerCaseLetter++;
+            else if (c >= '0' && c <= '9')
+                countOfNumbers++;
+        }
+
+        return countOfNumbers >= 1 && countOfLowerCaseLetter >= 1 && countOfUppercaseLetter >= 1;
+    }
+
 }
