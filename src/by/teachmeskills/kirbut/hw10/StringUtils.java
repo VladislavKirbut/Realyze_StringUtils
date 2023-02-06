@@ -73,4 +73,21 @@ public class StringUtils {
 
         return surname + " " + name.charAt(0) + ".";
     }
+
+    /*
+    * numberOfPassport - user data of passport
+    */
+    public static boolean checkNumberOfPassport(String numberOfPassport) {
+        numberOfPassport = numberOfPassport.trim();
+        char[] charNumber = numberOfPassport.toCharArray();
+
+        if (charNumber.length != 9 || charNumber[0] != 'M' || charNumber[1] != 'P')
+            return false;
+
+        for (int i = 2; i < charNumber.length; i++)
+            if (charNumber[i] < '0' || charNumber[i] > '9')
+                return false;
+
+        return true;
+    }
 }
