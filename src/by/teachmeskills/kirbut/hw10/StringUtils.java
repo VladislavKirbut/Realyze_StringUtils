@@ -55,4 +55,22 @@ public class StringUtils {
         return str;
     }
 
+    /*
+    * name - name of user
+    * surname - surname of user
+    * patronymic - patronymic of user
+    */
+    public static String getFullName(String name, String surname, String patronymic) {
+        if (name.length() == 0 || surname.length() == 0)
+            throw new IllegalArgumentException("Enter correct name or surname.");
+
+        name = name.trim();
+        surname = surname.trim();
+        patronymic = patronymic.trim();
+
+        if (patronymic.length() != 0)
+            return surname + " " + name.charAt(0) + "." + patronymic.charAt(0) + ".";
+
+        return surname + " " + name.charAt(0) + ".";
+    }
 }
