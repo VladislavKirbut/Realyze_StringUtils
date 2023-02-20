@@ -61,14 +61,23 @@ public class StringUtils {
     * numberOfPassport - user data of passport
     */
     public static boolean isNumberOfPassportCorrect(String numberOfPassport) {
-        char[] charNumber = numberOfPassport.toCharArray();
 
-        if (charNumber.length != 9 || charNumber[0] != 'M' || charNumber[1] != 'P') // не только MP (а любые две)
+        if (numberOfPassport.length() != 9 || !isEnglishUpperCase(numberOfPassport.charAt(0)) ||
+                !isEnglishUpperCase(numberOfPassport.charAt(1))) {
+
             return false;
+        }
 
-        for (int i = 2; i < charNumber.length; i++)
-            if (charNumber[i] < '0' || charNumber[i] > '9')
+        for (int i = 2; i < numberOfPassport.length(); i++)
+            if (numberOfPassport.charAt(i) < '0' || numberOfPassport.charAt(i) > '9')
                 return false;
+
+        return true;
+    }
+
+    public static boolean isEnglishUpperCase(char letter) {
+        if (!Character.isUpperCase(letter) || !Character.isLetter(letter))
+            return false;
 
         return true;
     }
