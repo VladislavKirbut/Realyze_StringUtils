@@ -4,6 +4,9 @@ import java.util.Scanner;
 public class StringUtils {
 
     private static final int CARD_NUMBER_LENGTH = 16;
+    private static final int PASSWORD_LENGTH = 8;
+    private static final int NUMBER_OF_PASSPORT_LENGTH = 8;
+    private static final int FIRST_NUMBER_POSITION = 2;
     /*
     * str - string whose passed as parameter
     * count - counter of character array elements
@@ -62,13 +65,13 @@ public class StringUtils {
     */
     public static boolean isNumberOfPassportCorrect(String numberOfPassport) {
 
-        if (numberOfPassport.length() != 9 || !isEnglishUpperCase(numberOfPassport.charAt(0)) ||
+        if (numberOfPassport.length() != NUMBER_OF_PASSPORT_LENGTH || !isEnglishUpperCase(numberOfPassport.charAt(0)) ||
                 !isEnglishUpperCase(numberOfPassport.charAt(1))) {
 
             return false;
         }
 
-        for (int i = 2; i < numberOfPassport.length(); i++)
+        for (int i = FIRST_NUMBER_POSITION; i < numberOfPassport.length(); i++)
             if (numberOfPassport.charAt(i) < '0' || numberOfPassport.charAt(i) > '9')
                 return false;
 
@@ -82,7 +85,7 @@ public class StringUtils {
         if (password.isBlank())
             throw new IllegalArgumentException("You didn't enter a password.");
 
-        if (password.length() < 8)
+        if (password.length() < PASSWORD_LENGTH)
             return false;
 
         int countOfUppercaseLetter = 0;
