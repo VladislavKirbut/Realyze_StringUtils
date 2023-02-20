@@ -3,12 +3,13 @@ import java.util.Scanner;
 
 public class StringUtils {
 
+    private static final int CARD_NUMBER_LENGTH = 16;
     /*
     * str - string whose passed as parameter
     * count - counter of character array elements
     */
     public static String normalizeString(String str) {
-        if (str.length() == 0)
+        if (str == null || str.length() == 0)
             return str;
 
         str = str.trim();
@@ -29,7 +30,7 @@ public class StringUtils {
     * count - counter of array elements
     */
     public static String changeFormatOfCard(String numberOfCard) {
-        if (numberOfCard.length() != 16)
+        if (numberOfCard.length() != CARD_NUMBER_LENGTH)
             throw new IllegalArgumentException("Enter correct number of card.");
 
         for (int i = 0; i < numberOfCard.length(); i++)
@@ -38,18 +39,7 @@ public class StringUtils {
 
         String lastNumbers = numberOfCard.substring(numberOfCard.length() - 4);
 
-        int count = 0;
-        char[] str1 = numberOfCard.toCharArray();
-        for (int i = 1; i < str1.length; i++) {
-            if (i % 5 != 0)
-                str1[count++] = '*';
-            else str1[count++] = ' ';
-        }
-
-        numberOfCard = String.valueOf(str1).substring(0, 15);
-        numberOfCard = numberOfCard + lastNumbers;
-
-        return numberOfCard;
+        return "**** **** **** " + lastNumbers;
     }
 
     /*
@@ -73,7 +63,7 @@ public class StringUtils {
     public static boolean isNumberOfPassportCorrect(String numberOfPassport) {
         char[] charNumber = numberOfPassport.toCharArray();
 
-        if (charNumber.length != 9 || charNumber[0] != 'M' || charNumber[1] != 'P')
+        if (charNumber.length != 9 || charNumber[0] != 'M' || charNumber[1] != 'P') // не только MP (а любые две)
             return false;
 
         for (int i = 2; i < charNumber.length; i++)
@@ -118,7 +108,7 @@ public class StringUtils {
     */
     public static boolean isAnEmail(String email) {
         if (email.isBlank())
-            throw new IllegalArgumentException("You don't enter email");
+            throw new IllegalArgumentException("You don't enter email"); // true/false
 
         int indexOfSymbolAt = email.indexOf('@');
         if (indexOfSymbolAt == 0 || indexOfSymbolAt == email.length() - 1)
