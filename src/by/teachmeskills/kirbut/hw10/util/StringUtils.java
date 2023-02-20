@@ -75,13 +75,6 @@ public class StringUtils {
         return true;
     }
 
-    public static boolean isEnglishUpperCase(char letter) {
-        if (!Character.isUpperCase(letter) || !Character.isLetter(letter))
-            return false;
-
-        return true;
-    }
-
     /*
     * password - user password which passed as parameter
     */
@@ -89,25 +82,26 @@ public class StringUtils {
         if (password.isBlank())
             throw new IllegalArgumentException("You didn't enter a password.");
 
-        char[] passwordArray = password.toCharArray();
-
-        if (passwordArray.length < 8)
+        if (password.length() < 8)
             return false;
 
         int countOfUppercaseLetter = 0;
         int countOfLowerCaseLetter = 0;
         int countOfNumbers = 0;
 
-        for (char c : passwordArray) {
-            if ((c >= 'A' && c <= 'Z') || (c >= 'А' && c <= 'Я') || c == 'Ё')
+        for (int i = 0; i < password.length(); i++) {
+            if (isEnglishUpperCase(password.charAt(i)) || isRussianUpperCase(password.charAt(i)))
                 countOfUppercaseLetter++;
-            else if ((c >= 'a' && c <= 'z') || (c >= 'а' && c <= 'я') || c == 'ё')
-                countOfLowerCaseLetter++;
-            else if (c >= '0' && c <= '9')
+            else if (Character.isDigit(password.charAt(i)))
                 countOfNumbers++;
+            else if(isEnglishLowerCase(password.charAt(i)) || isRussianLowerCase(password.charAt(i)))
+                countOfLowerCaseLetter++;
+
+            if (countOfNumbers >= 1 && countOfLowerCaseLetter >= 1 && countOfUppercaseLetter >= 1)
+                return true;
         }
 
-        return countOfNumbers >= 1 && countOfLowerCaseLetter >= 1 && countOfUppercaseLetter >= 1;
+        return false;
     }
 
     /*
@@ -134,6 +128,34 @@ public class StringUtils {
         }
 
         return countOfAt == 1;
+    }
+
+    public static boolean isRussianUpperCase(char letter) {
+        if ((letter < 'А' || letter > 'Я') && letter != 'Ё' )
+            return false;
+
+        return true;
+    }
+
+    public static boolean isRussianLowerCase(char letter) {
+        if ((letter < 'а' || letter > 'я') && letter != 'ё')
+            return false;
+
+        return true;
+    }
+
+    public static boolean isEnglishUpperCase(char letter) {
+        if (!Character.isUpperCase(letter) || !Character.isLetter(letter))
+            return false;
+
+        return true;
+    }
+
+    public static boolean isEnglishLowerCase(char letter) {
+        if (!Character.isLowerCase(letter))
+            return false;
+
+        return true;
     }
 
     public static String createString() {
